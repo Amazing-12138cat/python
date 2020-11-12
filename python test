@@ -1,1 +1,41 @@
+import os
 
+def checkfile4(file):
+    if os.path.exists(file):
+        print("[+]文件已存在！！")
+        return 0
+    else:
+        with open(file,"w"):
+            print("[+]正在创建文件...")
+            pass
+    print("[+]文件创建成功！")
+# def append_content(file4,file):
+#     print(file)
+#     with open(file4,"w") as f1:
+#         with open(file,"a") as f2:
+#             for line in f2:
+#                 f1.append(line)
+
+    pass
+
+def main():
+    file1name = "1.csv"
+    file2name = "2.csv"
+    file3name = "3.csv"
+    file4name = "4.csv"
+    file1path = "C:\\Users\\GZJ\\Desktop\\test\\"
+    file2path = "C:\\Users\\GZJ\\Desktop\\test\\"
+    file3path = "C:\\Users\\GZJ\\Desktop\\test\\"
+    file4path = "C:\\Users\\GZJ\\Desktop\\test\\"
+    file1 = file1path + file1name
+    file2 = file2path + file2name
+    file3 = file3path + file3name
+    file4 = file4path + file4name
+    print(file4)
+    checkfile4(file4)
+    for i in range(1,4):
+        append_content(file4,'file'+str(i))
+
+
+if __name__ == '__main__':
+    main()
