@@ -1,5 +1,7 @@
-import os
+#  实现把多个csv文件合并到一个csv文件中
 
+import os
+import pandas
 def checkfile4(file):
     if os.path.exists(file):
         print("[+]文件已存在！！")
@@ -9,16 +11,12 @@ def checkfile4(file):
             print("[+]正在创建文件...")
             pass
     print("[+]文件创建成功！")
-# def append_content(file4,file):
-#     print(file)
-#     with open(file4,"w") as f1:
-#         with open(file,"a") as f2:
-#             for line in f2:
-#                 f1.append(line)
-
-    pass
+def append_content(file4,file):
+    a = pandas.read_csv(file,encoding='gbk')
+    a.to_csv(file4,encoding='gbk',index=False,mode='a+')
 
 def main():
+    flag = 0
     file1name = "1.csv"
     file2name = "2.csv"
     file3name = "3.csv"
@@ -26,16 +24,18 @@ def main():
     file1path = "C:\\Users\\GZJ\\Desktop\\test\\"
     file2path = "C:\\Users\\GZJ\\Desktop\\test\\"
     file3path = "C:\\Users\\GZJ\\Desktop\\test\\"
-    file4path = "C:\\Users\\GZJ\\Desktop\\test\\"
+    file4path = "C:\\Users\\GZJ\\Desktop\\1\\"
     file1 = file1path + file1name
     file2 = file2path + file2name
     file3 = file3path + file3name
     file4 = file4path + file4name
-    print(file4)
     checkfile4(file4)
-    for i in range(1,4):
-        append_content(file4,'file'+str(i))
-
+    os.chdir("C:\\Users\\GZJ\\Desktop\\test\\")  ##切换到制定的路径进行os操作
+    file_list = os.listdir()                     ##把当前所有文件名称放到一个列表中，方便后续遍历
+    for file in file_list:
+        print(file)
+        append_content(file4,file)
 
 if __name__ == '__main__':
     main()
+##https://blog.csdn.net/weixin_45632617/article/details/101447395
