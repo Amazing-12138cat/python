@@ -1,42 +1,55 @@
 #  实现把多个csv文件合并到一个csv文件中
-
+#coding:utf-8
 import os
+import glob
 import pandas
 def checkfile4(file):
     if os.path.exists(file):
-        print("[+]文件已存在！！")
+        print("[+]汇总文件已存在！！")
         return 0
     else:
         with open(file,"w"):
             print("[+]正在创建文件...")
             pass
     print("[+]文件创建成功！")
+
+
 def append_content(file4,file):
+
+    # print("[+]正在汇总"+file+"数据中...")
+    # header_saved = False
+    # with open(file4,mode='a') as f4:
+    #     with open(file) as f1:
+    #         header = next(f1)
+    #         if not header_saved:
+    #             f4.write(header)
+    #             header_saved = True
+    #         for line in f1:
+    #             f4.write(line)
+    # print("[+]"+file+"汇总完成")
+
     a = pandas.read_csv(file,encoding='gbk')
-    a.to_csv(file4,encoding='gbk',index=False,mode='a+')
+    a.to_csv(file4,encoding='gbk',index=False,mode='a+',header=False)
 
 def main():
-    flag = 0
-    file1name = "1.csv"
-    file2name = "2.csv"
-    file3name = "3.csv"
     file4name = "4.csv"
-    file1path = "C:\\Users\\GZJ\\Desktop\\test\\"
-    file2path = "C:\\Users\\GZJ\\Desktop\\test\\"
-    file3path = "C:\\Users\\GZJ\\Desktop\\test\\"
-    file4path = "C:\\Users\\GZJ\\Desktop\\1\\"
-    file1 = file1path + file1name
-    file2 = file2path + file2name
-    file3 = file3path + file3name
+    #file1path,file2path,file3path = "C:\\Users\\GZJ\\Desktop\\test\\"
+    # file4path = "C:\\Users\\GZJ\\Desktop\\1\\"
+    #file1path ,file2path ,file3path = "C:\\Users\\Administrator\\Desktop\\test\\"
+    file4path = "C:\\Users\\Administrator\\Desktop\\1\\"
     file4 = file4path + file4name
     checkfile4(file4)
-    os.chdir("C:\\Users\\GZJ\\Desktop\\test\\")  ##切换到制定的路径进行os操作
+    #os.chdir("C:\\Users\\GZJ\\Desktop\\test\\")  ##切换到制定的路径进行os操作，改变当前工作目录
+    os.chdir("C:\\Users\\Administrator\\Desktop\\test\\")
     file_list = os.listdir()                     ##把当前所有文件名称放到一个列表中，方便后续遍历
     for file in file_list:
-        print(file)
+        #print(file)
         append_content(file4,file)
+        pass
 
 if __name__ == '__main__':
     main()
+
+
 ##https://blog.csdn.net/weixin_45632617/article/details/101447395
 ##https://www.jianshu.com/p/840ba135df30
