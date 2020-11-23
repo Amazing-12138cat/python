@@ -21,10 +21,34 @@ def show_w():
 
 pass
 def main():
-    show_w()
+    #show_w()
+    app = QtWidgets.QApplication(sys.argv)
+    window = QtWidgets.QWidget()
+
+    window.resize(500, 500)
+    window.move(100, 100)
+    window.setWindowTitle("图形化界面 v1.0")
+    window.setWindowIcon(QtGui.QIcon('C:\\Users\\GZJ\\Desktop\\2.png'))
+    QtWidgets.QToolTip.setFont(QtGui.QFont('SansSerif', 10))   ##设置提示语的字体和大小
+    window.setToolTip('这是窗口提示')
+    btn = QtWidgets.QPushButton('button', window)             ##设置按钮并给按钮命名
+    btn.setGeometry(200, 200, 100, 50)
+    btn.setToolTip('这是按钮提示')
+    # btn.setStyleSheet("background-color: rgb(164, 185, 255);"
+    #                     "border-color: rgb(170, 150, 163);"
+    #                     "font: 75 12pt \"Arial Narrow\";"
+    #                     "color: rgb(126, 255, 46);")
+    btn.clicked.connect(QtCore.QCoreApplication.instance().quit)
+
+    window.show()
+    sys.exit(app.exec_())
 
 if __name__ == '__main__':
     main()
+
+
+#http://www.cppcns.com/jiaoben/python/253290.html
+
 
 
 
