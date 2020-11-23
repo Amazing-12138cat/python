@@ -1,0 +1,32 @@
+import sys
+from PyQt5 import QtWidgets   #导入包的时候，必须导入明确的哪个包，不能只到文件路径下再指定文件下的方法，例如：a.b.c()，是错误的
+from PyQt5 import QtGui, QtCore
+
+def show_w():
+    '''显示窗口'''
+
+    app = QtWidgets.QApplication(sys.argv)      #所有的pyqt5应用必须创建一个应用对象
+    w = QtWidgets.QWidget()                     #Qwidget组件是pyqt5中所有用户界面类的基础类。
+
+    w.resize(500, 500)                          #resize方法调整了widget组件的大小。它现在是500px宽，500px高
+    w.move(500, 100)                            #move方法移动widget组件到一个位置
+    w.setWindowTitle('简单的窗口程序 v1.0')
+    #w.setWindowIcon(QtGui.QIcon('2.png'))
+    w.show()                        #show方法在屏幕上显示出widget。一个widget对象在这里第一次被内存中创建，并且之后在屏幕上显示
+    sys.exit(app.exec_())           #应用进入主循环，在这个地方，事件处理开始执行，主循环用于接收来自窗口触发的事件
+                                    #并且转发他们到widget应用上处理。如果我们调用exit方法或主widget组件被销毁，主循环将退出。
+                                    #sys.exit方法确保一个不留垃圾的退出。系统环境将会被通知应用是怎么被结束的
+
+
+
+pass
+def main():
+    show_w()
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+#http://www.cppcns.com/jiaoben/python/253290.html
