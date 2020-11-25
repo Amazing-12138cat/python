@@ -17,9 +17,6 @@ def show_w():
                                     #并且转发他们到widget应用上处理。如果我们调用exit方法或主widget组件被销毁，主循环将退出。
                                     #sys.exit方法确保一个不留垃圾的退出。系统环境将会被通知应用是怎么被结束的
 
-
-
-pass
 def main():
     #show_w()
     app = QtWidgets.QApplication(sys.argv)
@@ -34,10 +31,6 @@ def main():
     btn = QtWidgets.QPushButton('button', window)             ##设置按钮并给按钮命名
     btn.setGeometry(200, 200, 100, 50)
     btn.setToolTip('这是按钮提示')
-    # btn.setStyleSheet("background-color: rgb(164, 185, 255);"
-    #                     "border-color: rgb(170, 150, 163);"
-    #                     "font: 75 12pt \"Arial Narrow\";"
-    #                     "color: rgb(126, 255, 46);")
     btn.clicked.connect(QtCore.QCoreApplication.instance().quit)
 
     window.show()
