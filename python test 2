@@ -52,6 +52,27 @@ if __name__ == '__main__':
 
 
 
+import sys
+from PyQt5 import QtWidgets
+from PyQt5 import QtGui, QtCore
 
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    window = QtWidgets.QWidget()
+    window.resize(500, 500)
+    window.move(100,100)
+    window.setWindowTitle("这是图形化界面 v1.0")
+    window.setWindowIcon(QtGui.QIcon("C:\\Users\\Administrator\\Desktop\\2.png"))
+#设置输入框
+    textbox = QtWidgets.QLineEdit(window)
+    textbox.resize(100,20)
+    textbox.move(50,50)
+
+
+    window.show()
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
 #http://www.cppcns.com/jiaoben/python/253290.html
 
