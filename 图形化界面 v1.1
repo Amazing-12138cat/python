@@ -1,71 +1,26 @@
 import sys
 from PyQt5 import QtWidgets   #导入包的时候，必须导入明确的哪个包，不能只到文件路径下再指定文件下的方法，例如：a.b.c()，是错误的
 from PyQt5 import QtGui, QtCore
-
-def show_w():
-    '''显示窗口'''
-
-    app = QtWidgets.QApplication(sys.argv)      #所有的pyqt5应用必须创建一个应用对象
-    w = QtWidgets.QWidget()                     #Qwidget组件是pyqt5中所有用户界面类的基础类。
-
-    w.resize(500, 500)                          #resize方法调整了widget组件的大小。它现在是500px宽，500px高
-    w.move(500, 100)                            #move方法移动widget组件到一个位置
-    w.setWindowTitle('简单的窗口程序 v1.0')
-    #w.setWindowIcon(QtGui.QIcon('2.png'))
-    w.show()                        #show方法在屏幕上显示出widget。一个widget对象在这里第一次被内存中创建，并且之后在屏幕上显示
-    sys.exit(app.exec_())           #应用进入主循环，在这个地方，事件处理开始执行，主循环用于接收来自窗口触发的事件
-                                    #并且转发他们到widget应用上处理。如果我们调用exit方法或主widget组件被销毁，主循环将退出。
-                                    #sys.exit方法确保一个不留垃圾的退出。系统环境将会被通知应用是怎么被结束的
-
 def main():
-    #show_w()
-    app = QtWidgets.QApplication(sys.argv)
-    window = QtWidgets.QWidget()
+    app = QtWidgets.QApplication(sys.argv)      #所有的pyqt5应用必须创建一个应用对象
+    window = QtWidgets.QWidget()                #Qwidget组件是pyqt5中所有用户界面类的基础类。
 
-    window.resize(500, 500)
-    window.move(100, 100)
-    window.setWindowTitle("图形化界面 v1.0")
-    window.setWindowIcon(QtGui.QIcon('C:\\Users\\GZJ\\Desktop\\2.png'))
-    QtWidgets.QToolTip.setFont(QtGui.QFont('SansSerif', 10))   ##设置提示语的字体和大小
+    window.resize(500, 500)                     #resize方法调整了widget组件的大小。它现在是500px宽，500px高
+    window.move(100, 100)                       #move方法移动widget组件到一个位置
+    window.setWindowTitle("简单的窗口程序 v1.1")
+    window.setWindowIcon(QtGui.QIcon('C:\\Users\\GZJ\\Desktop\\2.png'))  ##设置界面左上角小图标   
     window.setToolTip('这是窗口提示')
-    btn = QtWidgets.QPushButton('button', window)             ##设置按钮并给按钮命名
+    
+    btn = QtWidgets.QPushButton('button', window)                       ##设置按钮并给按钮命名
     btn.setGeometry(200, 200, 100, 50)
     btn.setToolTip('这是按钮提示')
     btn.clicked.connect(QtCore.QCoreApplication.instance().quit)
 
-    window.show()
-    sys.exit(app.exec_())
-
-if __name__ == '__main__':
-    main()
-
-
-#http://www.cppcns.com/jiaoben/python/253290.html
-
-
-
-
-import sys
-from PyQt5 import QtWidgets
-from PyQt5 import QtGui, QtCore
-
-def main():
-    app = QtWidgets.QApplication(sys.argv)
-    window = QtWidgets.QWidget()
-    window.resize(500, 500)
-    window.move(100,100)
-    window.setWindowTitle("这是图形化界面 v1.0")
-    window.setWindowIcon(QtGui.QIcon("C:\\Users\\Administrator\\Desktop\\2.png"))
-#设置输入框
-    textbox = QtWidgets.QLineEdit(window)
-    textbox.resize(100,20)
-    textbox.move(50,50)
-
-
-    window.show()
-    sys.exit(app.exec_())
+    window.show()                   #show方法在屏幕上显示出widget。一个widget对象在这里第一次被内存中创建，并且之后在屏幕上显示
+    sys.exit(app.exec_())           #应用进入主循环，在这个地方，事件处理开始执行，主循环用于接收来自窗口触发的事件
+                                    #并且转发他们到widget应用上处理。如果我们调用exit方法或主widget组件被销毁，主循环将退出。
+                                    #sys.exit方法确保一个不留垃圾的退出。系统环境将会被通知应用是怎么被结束的
 
 if __name__ == '__main__':
     main()
 #http://www.cppcns.com/jiaoben/python/253290.html
-
