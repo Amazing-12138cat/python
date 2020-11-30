@@ -1,2 +1,43 @@
 #https://www.jianshu.com/p/d18ff36a78d6?from=singlemessage
 #https://blog.csdn.net/bai_yechuang2012/article/details/84348312
+import sys
+from PyQt5 import Qt,QtWidgets,QtGui
+import tkinter
+class GUI(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initGUI()
+    def initGUI(self):
+        self.resize(500,500)
+        self.setWindowTitle("图形化界面 v1.0")
+        self.setWindowIcon(QtGui.QIcon("C:\\Users\\GZJ\\Desktop\\2.png"))
+        self.setToolTip("窗口提示")
+
+        self.textbox = Qt.QLineEdit(self)
+        self.textbox.resize(100,20)
+        self.textbox.move(100,50)
+        self.textbox.setToolTip("输入框提示")
+
+        self.btn = QtWidgets.QPushButton("按钮",self)
+        self.btn.resize(100,20)
+        self.btn.move(200,50)
+        self.btn.setToolTip("按钮提示")
+        self.btn.clicked.connect(self.clickbtn)
+        self.show()
+    def clickbtn(self):
+        textboxValue = self.textbox.text()
+        QtWidgets.QMessageBox.question(self,"信息","你输入的信息框内容为："+textboxValue,QtWidgets.QMessageBox.Ok,QtWidgets.QMessageBox.Ok)
+        self.textbox.setText('')
+    def closeEvent(self, QCloseEvent):
+        replay = QtWidgets.QMessageBox.question(self,'警告',"确定关闭当前窗口？",QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,QtWidgets.QMessageBox.No)
+        if replay == QtWidgets.QMessageBox.Yes:
+            QCloseEvent.accept()
+        else:
+            QCloseEvent.ignore()
+
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    gui = GUI()
+    sys.exit(app.exec_())
+if __name__ == '__main__':
+    main()
