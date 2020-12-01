@@ -16,6 +16,10 @@ class GUI(QtWidgets.QWidget):
         self.textbox = Qt.QLineEdit(self)
         self.textbox.resize(100,20)
         self.textbox.move(100,50)
+        #resize()是设置application窗口大小
+        #move()设置窗口所处位置
+        #self.btn.setGeometry(200,50,100,20)
+        #setGeometry() 等于 move()+resize() setGeometry(x,y,长px,宽px)
         self.textbox.setToolTip("输入框提示")
 
         self.btn = QtWidgets.QPushButton("按钮",self)
