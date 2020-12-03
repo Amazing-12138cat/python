@@ -1,0 +1,68 @@
+import requests
+import base64
+import sys
+from PyQt5 import QtWidgets,QtGui,Qt
+
+def getHtml(url):
+    headers = {
+        'User-Agent': 'Mozilla / 5.0(Windows NT 10.0;Win64;x64) AppleWebKit / 537.36(KHTML, likeGecko) Chrome / 85.0.4183.102 Safari / 537.36',
+    }
+    r = requests.get(url,headers=headers)
+    return r.text
+class GUI(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initGUI()
+    def initGUI(self):
+        self.resize(600,600)
+        self.setWindowTitle("图形化界面 v1.0")
+        self.setWindowIcon(QtGui.QIcon("C:\\Users\\Administrator\\Desktop\\1\\2.png"))
+        self.textbox = Qt.QLineEdit(self)
+        self.textbox.resize(300,20)
+        self.textbox.move(100,100)
+        self.btn = QtWidgets.QPushButton("查询",self)
+        self.btn.resize(100,20)
+        self.btn.move(400,100)
+        self.btn.clicked.connect(self.clickbtn)
+        self.show()
+    def clickbtn(self):
+        textValue = self.textbox.text()
+        urls = geturl(textValue)
+
+        html = getHtml(urls)
+        QtWidgets.QMessageBox.question(self, "信息", + html , QtWidgets.QMessageBox.Ok,QtWidgets.QMessageBox.Ok)
+        #QtWidgets.QMessageBox.question(self,"信息","您输入的内容为："+textValue+'\n'+html,QtWidgets.QMessageBox.Ok,QtWidgets.QMessageBox.Ok)
+    def closeEvent(self, QCloseEvent):
+        replay = QtWidgets.QMessageBox.question(self,'警告',"确定关闭当前窗口？",QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,QtWidgets.QMessageBox.No)
+        if replay == QtWidgets.QMessageBox.Yes:
+            QCloseEvent.accept()
+        else:
+            QCloseEvent.ignore()
+
+def geturl(keyword):
+    keyword = keyword.encode('utf-8')
+    bs64 = base64.b64encode(keyword)
+    urls = "https://fofa.so/result?q=" + str(keyword, encoding="utf-8") + "&qbase64=" + str(bs64, encoding="utf-8")
+    return urls
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    gui = GUI()
+
+
+    # #加密
+    # keyword = keyword.encode('utf-8')
+    # bs64 = base64.b64encode(keyword)
+
+    #解密
+    # bs65 = base64.b64decode(bs64)
+    # bs65 = bs65.decode('utf-8')
+    # print(bs65)
+    # urls = "https://fofa.so/result?q="+ str(keyword,encoding="utf-8") + "&qbase64="+ str(bs64,encoding="utf-8")
+    # headers = {
+    #     'User-Agent': 'Mozilla / 5.0(Windows NT 10.0;Win64;x64) AppleWebKit / 537.36(KHTML, likeGecko) Chrome / 85.0.4183.102 Safari / 537.36',
+    # }
+    # html = getHtml(urls,headers)
+    # print(html)
+    sys.exit(app.exec_())
+if __name__ == '__main__':
+    main()
