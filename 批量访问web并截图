@@ -1,0 +1,34 @@
+##实习访问txt中的域名并截图保存成png图片
+from selenium import webdriver
+from PIL import ImageGrab
+from docx import Document
+
+a = 1
+def get_domain(domain_list):
+    for line in open(domain_list,mode='r'):
+        access_domain(line)
+
+
+def access_domain(domain):
+    driver = webdriver.Chrome()
+    #driver.set_window_size(1920, 1080)
+    driver.get(domain)
+    driver.maximize_window()
+    screenshots(domain)
+    driver.quit()
+
+
+def screenshots(domain):
+    global a
+    pic= ImageGrab.grab()
+    pic.save("C:\\Users\\GZJ\Desktop\\2\\"+str(a)+".png")
+    a = a+1
+
+def main():
+
+    domain_list = "C:\\Users\\GZJ\Desktop\\domain_list.txt"
+    get_domain(domain_list)
+
+
+if __name__ == '__main__':
+    main()
