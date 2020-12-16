@@ -27,3 +27,22 @@ def main():
 
 if __name__ == '__main__':
     main()
+'''
+from docx import Document
+from docx.shared import Inches
+import os
+import time
+def main():
+    pic_path = "C:\\Users\\Administrator\\Desktop\\图片\\"
+    pic_name = []
+    pic_name = os.listdir(pic_path)
+    document = Document()
+    document.add_heading('业务连通性测试', 0)
+    for i in pic_name:
+        document.add_paragraph(i)
+        document.add_picture(pic_path+i,width=Inches(6))
+    now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
+    document.save(pic_path+now+'业务联通行测试.docx')
+if __name__ == '__main__':
+    main()
+'''
