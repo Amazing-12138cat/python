@@ -1,7 +1,7 @@
 ##实习访问txt中的域名并截图保存成png图片
 from selenium import webdriver
 from PIL import ImageGrab
-from docx import Document
+#from docx import Document
 
 a = 1
 def get_domain(domain_list):
