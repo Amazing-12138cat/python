@@ -7,8 +7,6 @@ a = 1
 def get_domain(domain_list):
     for line in open(domain_list,mode='r'):
         access_domain(line)
-
-
 def access_domain(domain):
     driver = webdriver.Chrome()
     #driver.set_window_size(1920, 1080)
@@ -17,7 +15,6 @@ def access_domain(domain):
     screenshots(domain)
     driver.quit()
 
-
 def screenshots(domain):
     global a
     pic= ImageGrab.grab()
@@ -25,10 +22,8 @@ def screenshots(domain):
     a = a+1
 
 def main():
-
     domain_list = "C:\\Users\\GZJ\Desktop\\domain_list.txt"
     get_domain(domain_list)
-
 
 if __name__ == '__main__':
     main()
