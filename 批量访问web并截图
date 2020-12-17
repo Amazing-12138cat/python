@@ -1,4 +1,4 @@
-##实时访问txt中的域名并截图保存成png过jpg图片
+##实时访问txt中的域名并截图保存成png过jpg图片,当访问未知域名并且未访问成功时，会报错
 from selenium import webdriver
 from PIL import ImageGrab
 from docx import Document
