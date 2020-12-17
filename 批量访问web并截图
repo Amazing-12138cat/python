@@ -1,48 +1,41 @@
-##实时访问txt中的域名并截图保存成png图片
+##实时访问txt中的域名并截图保存成png过jpg图片
 from selenium import webdriver
 from PIL import ImageGrab
-#from docx import Document
+from docx import Document
+from docx.shared import Inches
+import os
+import time
 
-a = 1
 def get_domain(domain_list):
     for line in open(domain_list,mode='r'):
         access_domain(line)
 def access_domain(domain):
     driver = webdriver.Chrome()
-    #driver.set_window_size(1920, 1080)
     driver.get(domain)
     driver.maximize_window()
     screenshots(domain)
     driver.quit()
-
 def screenshots(domain):
-    global a
     pic= ImageGrab.grab()
-    pic.save("C:\\Users\\GZJ\Desktop\\2\\"+str(a)+".png")
-    a = a+1
+    pic.save("路径\\"+domain[7:-1]+".png")###截屏后图片保存的位置
 
-def main():
-    domain_list = "C:\\Users\\GZJ\Desktop\\domain_list.txt"
-    get_domain(domain_list)
-
-if __name__ == '__main__':
-    main()
-'''
-from docx import Document
-from docx.shared import Inches
-import os
-import time
-def main():
-    pic_path = "C:\\Users\\Administrator\\Desktop\\图片\\"
+def save_doc():
     pic_name = []
+    pic_path = "路径"                     ###图片存放位置
     pic_name = os.listdir(pic_path)
     document = Document()
     document.add_heading('业务连通性测试', 0)
     for i in pic_name:
+        if ".doc" in i:
+            continue
         document.add_paragraph(i)
         document.add_picture(pic_path+i,width=Inches(6))
     now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
-    document.save(pic_path+now+'业务联通行测试.docx')
+    document.save(pic_path + now + '业务连通性测试.docx')
+
+def main():
+    domain_list = "domain_list.txt"   #需要测试连通性的地址txt
+    get_domain(domain_list)
+    save_doc()
 if __name__ == '__main__':
     main()
-'''
