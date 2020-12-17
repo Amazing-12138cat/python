@@ -1,0 +1,46 @@
+##实时访问txt中的域名并截图保存成png图片,基本实现功能。但是由于有些页面不存在或者其他原因访问不同，会占用大量程序运行时间影响效率，后续可以添加超时机制进行优化程序运行成本
+from selenium import webdriver
+from PIL import ImageGrab
+from docx import Document
+from docx.shared import Inches
+import os
+import time
+
+def get_domain(domain_list):
+    for line in open(domain_list,mode='r'):
+        access_domain(line)
+def access_domain(domain):
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    try:
+        driver.get(domain)
+        screenshots(domain.split("/"))
+        driver.quit()
+        print("[+]"+ domain[:-1] +" is OK !")
+    except:
+        print("[-]"+domain[:-1]+" is error")
+        driver.quit()
+def screenshots(domain):
+    pic= ImageGrab.grab()
+    pic.save("图片路径\\"+domain[2][:-1]+".png")
+
+def save_doc():
+    pic_name = []
+    pic_path = "图片路径\\"
+    pic_name = os.listdir(pic_path)
+    document = Document()
+    document.add_heading('业务连通性测试', 0)
+    for i in pic_name:
+        if ".doc" in i:
+            continue
+        document.add_paragraph(i)
+        document.add_picture(pic_path+i,width=Inches(6))
+    now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
+    document.save(pic_path + now + '业务连通性测试.docx')
+
+def main():
+    domain_list = "存放域名txt文档所在位置"
+    get_domain(domain_list)
+    save_doc()
+if __name__ == '__main__':
+    main()
