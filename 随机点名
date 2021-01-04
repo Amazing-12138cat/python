@@ -1,0 +1,7 @@
+##随机输出中奖人名
+import random
+num = eval(input("请输入想要中奖人数："))
+students = ["张三","李四","王五","小明","小张","小王"]
+for i in range(num):
+    print(random.choice(students))
+    i = i+1
