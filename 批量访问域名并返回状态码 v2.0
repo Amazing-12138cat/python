@@ -2,7 +2,6 @@
 import requests
 def get_domain(domain_list):
     for line in open(domain_list,mode='r'):
-        #print(line)
         access_domain(line)
 def access_domain(domain):
     headers = {
