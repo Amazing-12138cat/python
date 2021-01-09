@@ -1,4 +1,4 @@
-#解决了v1.0版本的部分问题，但是会出现访问同一个网站，网站缓存机制的原因，不允许一段时间内再次访问网站资源，造成网站资源占用，返回405状态码，后续考虑修改
+#解决了v1.0版本的问题
 import requests
 def get_domain(domain_list):
     for line in open(domain_list,mode='r'):
