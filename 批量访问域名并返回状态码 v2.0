@@ -1,0 +1,30 @@
+#解决了v1.0版本的问题，但是会出现访问同一个网站，网站缓存机制的原因，不允许一段时间内再次访问网站资源，造成网站资源占用，返回405状态码，后续考虑修改
+import requests
+import random
+def get_domain(domain_list):
+    for line in open(domain_list,mode='r'):
+        #print(line)
+        access_domain(line)
+def access_domain(domain):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+        'Accept': 'text/html,application/xhtm+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    }
+    try:
+        requests.packages.urllib3.disable_warnings()
+        domain = domain.strip('\n')
+        if domain[:5] == 'https':
+            r = requests.post(domain,headers=headers,verify=False)
+            print(r.status_code)
+        else:
+            r = requests.get(domain,headers=headers,verify=False)
+            print(r.status_code)
+        print("[+]"+ domain[:-1] +" is OK !")
+    except Exception as e:
+        print(e)
+        print("[-]"+domain[:-1]+" is error")
+def main():
+    domain_list = "C:\\Users\\Administrator\\Desktop\\domain_list.txt"
+    get_domain(domain_list)
+if __name__ == '__main__':
+    main()
