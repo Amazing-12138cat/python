@@ -1,0 +1,41 @@
+#有bug，域名后面最后一个字符是%0A(回车)，请求的时候会带，造成访问失败(404)
+import time
+import requests
+import random
+def get_domain(domain_list):
+    for line in open(domain_list,mode='r'):
+        access_domain(line)
+def access_domain(domain):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+        'Accept': 'text/html,application/xhtm+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    }
+    user_agent = [
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763',
+        'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:65.0) Gecko/20100101 Firefox/65.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36']
+    try:
+        time.sleep(1)
+        headers['User-Agent'] = random.choice(user_agent)
+        headers['Host'] = domain.split("/")[2]
+        #headers['Connection'] = 'close'
+        print(headers['Host'])
+        if domain[:5] == 'https':
+            r = requests.post(domain,headers=headers)
+            print(r.status_code)
+        else:
+            r = requests.get(domain,headers=headers)
+            print(r.status_code)
+        print("[+]"+ domain[:-1] +" is OK !")
+    except Exception as e:
+        print(e)
+        print("[-]"+domain[:-1]+" is error")
+def main():
+    domain_list = "域名.txt"
+    get_domain(domain_list)
+if __name__ == '__main__':
+    main()
+
