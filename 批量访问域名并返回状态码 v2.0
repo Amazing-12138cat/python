@@ -18,7 +18,7 @@ def access_domain(domain):
         #print(e)
         print("[-]"+domain[:-1]+" is error!")
 def main():
-    domain_list = "C:\\Users\\Administrator\\Desktop\\domain_list.txt"
+    domain_list = "域名.txt"
     get_domain(domain_list)
 if __name__ == '__main__':
     main()
