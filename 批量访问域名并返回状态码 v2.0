@@ -1,4 +1,4 @@
-#解决了v1.0版本的问题
+#解决了v1.0版本的问题，仅仅只是识别网站是否访问的通，还未做备份保存机制
 import requests
 def get_domain(domain_list):
     for line in open(domain_list,mode='r'):
