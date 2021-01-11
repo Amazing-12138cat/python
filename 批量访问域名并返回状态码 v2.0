@@ -1,4 +1,11 @@
 #解决了"批量访问域名并返回状态码v1.0"版本的问题，仅仅只是识别网站是否访问的通，还未做备份保存机制
+#域名.txt中的被荣事例：
+/**
+* https://www.baidu.com/
+* http://www.baidu.com
+* https://www.jd.com/
+* https://www.sohu.com/
+**/
 import requests
 def get_domain(domain_list):
     for line in open(domain_list,mode='r'):
