@@ -33,13 +33,10 @@ def append_content(file4,file):
 
 def main():
     file4name = "4.csv"
-    #file1path,file2path,file3path = "C:\\Users\\GZJ\\Desktop\\test\\"
-    # file4path = "C:\\Users\\GZJ\\Desktop\\1\\"
-    #file1path ,file2path ,file3path = "C:\\Users\\Administrator\\Desktop\\test\\"
     file4path = "C:\\Users\\Administrator\\Desktop\\1\\"
     file4 = file4path + file4name
     checkfile4(file4)
-    #os.chdir("C:\\Users\\GZJ\\Desktop\\test\\")  ##切换到制定的路径进行os操作，改变当前工作目录
+    #os.chdir("C:\\Users\\user\\Desktop\\test\\")  ##切换到制定的路径进行os操作，改变当前工作目录
     os.chdir("C:\\Users\\Administrator\\Desktop\\test\\")
     file_list = os.listdir()                     ##把当前所有文件名称放到一个列表中，方便后续遍历
     for file in file_list:
