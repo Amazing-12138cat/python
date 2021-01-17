@@ -1,4 +1,4 @@
-#对比第一列与第二列数据，输出不同的数据，以此类推第三列与第四列。。。
+#对比第一列与第二列数据，输出不同的数据，以此类推第三列与第四列。。。，待完善
 import pandas
 def read_content(excel_path):
     try:
@@ -22,3 +22,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
