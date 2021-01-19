@@ -1,0 +1,38 @@
+import pandas
+import requests
+from bs4 import BeautifulSoup
+'''
+1、先登录浏览器进行登录并截取用户请求头信息放到headers里面
+'''
+def process_html(html):
+    soup = BeautifulSoup(html)
+    print(soup.prettify())
+    pass
+
+def get_threat(ip):
+    URL = "https://x.threatbook.cn/nodev4/ip/"
+    headers = {
+        'Host': 'x.threatbook.cn',
+        'User-Agent': 'Mozilla / 5.0(Windows NT 10.0;WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 87.0.4280.88 Safari / 537.36',
+        'Cookie': '',
+    }
+    ip = (URL+ip)[0]
+    try:
+        r = requests.get(ip,headers=headers)
+        process_html(r.text)
+    except  Exception as e:
+        print("[-] get_threat is error! \n error case:"+e)
+
+def get_ip(ip_list):
+    sheet = pandas.read_excel(ip_list)
+    data = sheet.loc[:,['ip']].values
+    for ip in data:
+        get_threat(ip)
+        #print(ip)
+
+def main():
+
+    ip_list = "ip_list.xlsx"
+    get_ip(ip_list)
+if __name__ == '__main__':
+    main()
