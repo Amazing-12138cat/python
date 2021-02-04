@@ -45,7 +45,7 @@ def write_csv():
 def main():
     page = input("请输入查询页数:")
     # keyword = input("请输入关键词的Base64编码:")
-    keyword = ""                                ##关键字base65编码
+    keyword = ""                                ##关键字base64编码
     fofa_cookie = input("请输入fofa的Cookie:")
     headers = {
         'Host': 'fofa.so',
