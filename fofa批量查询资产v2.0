@@ -1,0 +1,67 @@
+#fofa爬取网页数据
+from lxml import etree
+import requests
+import re
+import csv
+
+def get_html(url,headers):
+    try:
+        r = requests.get(url,headers =headers)
+        return r.text
+    except Exception as e:
+        print("[-]error:"+e)
+        return None
+
+def deal_html_name(html):
+    etree_html = etree.HTML(html)
+    for i in range(1,11):
+        content = etree_html.xpath('//*[@id="ajax_content"]/div['+str(i)+']/div[1]/div[2]')
+        name = etree.tostring(content[0],encoding='utf-8',pretty_print=True,method='html').decode("utf-8")
+        print(name.replace('<div class="time">', '').replace('</div>', '').replace(' ', '').replace('\n', '').replace('</a>',''))
+
+def deal_html_ip(html):
+    etree_html = etree.HTML(html)
+    for i in range(1,11):
+        content = etree_html.xpath('//*[@id="ajax_content"]/div['+str(i)+']/div[1]/div[3]/a')
+        ip = etree.tostring(content[0]).decode('utf-8')
+        pattern_ip = re.compile(r'>.*?<')
+        print(re.findall(pattern_ip,ip)[0][1:-1])
+def deal_html_http(html):
+    etree_html = etree.HTML(html)
+    for i in range(1,11):
+        content = etree_html.xpath('//*[@id="ajax_content"]/div['+str(i)+']/div[1]/div[1]/a')
+        for each in content:
+            http = etree.tostring(each).decode('utf-8')
+            pattern_http = re.compile(r'http.*?"')
+            print(re.findall(pattern_http,http)[0][:-1])
+            break
+
+def write_csv():
+    csv_headers = ['name','ip','http']
+    with open("test.csv",'w') as f:                ##test.csv路径
+        f_csv = csv.writer(f)
+        f_csv.writerow(csv_headers)
+
+def main():
+    page = input("请输入查询页数:")
+    # keyword = input("请输入关键词的Base64编码:")
+    keyword = ""                                ##关键字base65编码
+    fofa_cookie = input("请输入fofa的Cookie:")
+    headers = {
+        'Host': 'fofa.so',
+        'User-Agent': 'Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,like Gecko)Chrome/87.0.4280.88Safari/537.36',
+        'Cookie': fofa_cookie,
+    }
+    for i in range(1, int(page) + 1):
+        print("第" + str(i) + "页")
+        url = "https://fofa.so/result?page=" + str(i) + "&qbase64=" + keyword
+        html = get_html(url, headers)
+        deal_html_name(html)
+        deal_html_ip(html)
+        deal_html_http(html)
+        write_csv()
+        print("----------------------------------------------------------------------------------")
+
+if __name__ == '__main__':
+    main()
+
