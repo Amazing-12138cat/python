@@ -1,0 +1,106 @@
+#fofa爬取网页数据
+from lxml import etree
+import requests,re,os
+import openpyxl
+import base64,random,time
+def get_html(url,headers):
+    try:
+        r = requests.get(url,headers =headers)
+        return r.text
+    except Exception as e:
+        print("[-]error:"+e)
+        return None
+
+def deal_html_name(html):
+    list_name= []
+    etree_html = etree.HTML(html)
+    for i in range(1,11):
+        content = etree_html.xpath('//*[@id="ajax_content"]/div['+str(i)+']/div[1]/div[2]')
+        name = etree.tostring(content[0],encoding='utf-8',pretty_print=True,method='html').decode("utf-8")
+        list_name.append(name.replace('<div class="time">', '').replace('</div>', '').replace(' ', '').replace('\n', '').replace('</a>',''))
+        #print(name.replace('<div class="time">', '').replace('</div>', '').replace(' ', '').replace('\n', '').replace('</a>',''))
+    return list_name
+def deal_html_ip(html):
+    list_ip = []
+    etree_html = etree.HTML(html)
+    for i in range(1,11):
+        content = etree_html.xpath('//*[@id="ajax_content"]/div['+str(i)+']/div[1]/div[3]/a')
+        ip = etree.tostring(content[0]).decode('utf-8')
+        pattern_ip = re.compile(r'>.*?<')
+        list_ip.append(re.findall(pattern_ip,ip)[0][1:-1])
+    return list_ip
+        #print(re.findall(pattern_ip,ip)[0][1:-1])
+def deal_html_port(html):
+    list_port = []
+    etree_html = etree.HTML(html)
+    for i in range(1,11):
+        port = etree_html.xpath('//*[@id="ajax_content"]/div['+str(i)+']/div[2]/div[1]/a')
+        for i in port:
+            pattern_port = re.compile(r'>.*?<')
+            port_single = etree.tostring(i).decode('utf-8').replace('\n','')
+            list_port.append(re.findall(pattern_port,port_single)[0][1:-1])
+    return list_port
+        # for i in port:
+        #     etree.tostring(i).decode('utf-8')
+        #     print(etree.tostring(i).decode('utf-8'))
+
+        # ip = etree.tostring(content[0]).decode('utf-8')
+        # pattern_ip = re.compile(r'>.*?<')
+        # list_ip.append(re.findall(pattern_ip,ip)[0][1:-1])
+    return list_port
+def deal_html_http(html):
+    list_http = []
+    etree_html = etree.HTML(html)
+    for i in range(1,11):
+        content = etree_html.xpath('//*[@id="ajax_content"]/div['+str(i)+']/div[1]/div[1]/a')
+        for each in content:
+            http = etree.tostring(each).decode('utf-8')
+            pattern_http = re.compile(r'http.*?"')
+            list_http.append(re.findall(pattern_http,http)[0][:-1])
+            #print(re.findall(pattern_http,http)[0][:-1])
+            break
+    return list_http
+def new_excel(filename):
+    workbook = openpyxl.Workbook()
+    worksheet = workbook.active
+    excel_headers = ['name', 'ip', 'port','http']
+    worksheet.append(excel_headers)
+    workbook.save(filename)
+
+def write_excel(filename,name,ip,port,http):
+    if not os.path.isfile(filename):
+        print("EXCEL is not exit!,creating ...")
+        new_excel(filename)
+    print("writeing ...")
+    workbook = openpyxl.load_workbook(filename)
+    worksheet = workbook.active
+    for i in range(len(name)):
+        worksheet.append([name[i],ip[i],port[i],http[i]])
+    workbook.save(filename)
+
+def main():
+
+    page = input("请输入查询页数:")
+    keyword = input("请输入关键词:")
+    keyword = base64.b64encode(keyword.encode('utf-8'))                               ##关键字base64编码
+
+    fofa_cookie = input("请输入fofa的Cookie:")
+    headers = {
+        'Host': 'fofa.so',
+        'User-Agent': 'Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,like Gecko)Chrome/87.0.4280.88Safari/537.36',
+        'Cookie': fofa_cookie,
+    }
+    filename = ""                          #文件所在路径
+    for i in range(1, int(page) + 1):
+        time.sleep(random.randint(10,15))
+        print("第" + str(i) + "页")
+        url = "https://fofa.so/result?page=" + str(i) + "&qbase64=" + keyword.decode('utf-8')
+        html = get_html(url, headers)
+        name = deal_html_name(html)
+        ip = deal_html_ip(html)
+        port = deal_html_port(html)
+        http = deal_html_http(html)
+        write_excel(filename,name,ip,port,http)
+    print("all done! nice")
+if __name__ == '__main__':
+    main()
