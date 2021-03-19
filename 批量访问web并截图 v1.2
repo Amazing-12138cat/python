@@ -22,11 +22,11 @@ def access_domain(domain):
         driver.quit()
 def screenshots(domain):
     pic= ImageGrab.grab()
-    pic.save("图片路径\\"+domain[2][:-1]+".png")
+    pic.save("图片路径\\"+domain[2][:-1]+".png")        #need to edit
 
 def save_doc():
     pic_name = []
-    pic_path = "图片路径\\"
+    pic_path = "图片路径\\"                             #need to edit
     pic_name = os.listdir(pic_path)
     document = Document()
     document.add_heading('业务连通性测试', 0)
@@ -39,7 +39,7 @@ def save_doc():
     document.save(pic_path + now + '业务连通性测试.docx')
 
 def main():
-    domain_list = "存放域名txt文档所在位置"
+    domain_list = "存放域名txt文档所在位置"               #need to edit
     get_domain(domain_list)
     save_doc()
 if __name__ == '__main__':
