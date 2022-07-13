@@ -9,7 +9,7 @@
 import pandas as pd             #need install :pip install pandas
 lists = []
 txt_name = 'ip.txt'             ##edit
-excel_name = 'ip.csv'           ##edit
+excel_name = 'ip.csv'           ##edit,cxv\xlsx\xls
 
 def read_csv():
     data = pd.read_csv(excel_name,index_col=False)
