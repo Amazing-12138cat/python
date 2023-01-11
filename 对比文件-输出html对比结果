@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+'''
+# File      Name:对比文件.py
+# Author:   XXXXXXX
+# Date:     2023/1/11 16:04
+# reference：https://blog.51cto.com/hnr520/1880736
+'''
+import difflib
+import argparse
+import sys
+def readfile(filename):
+    try:
+        with open(filename, 'r') as fileHandle:
+            text = fileHandle.read().splitlines()
+        return text
+    except IOError as e:
+        print("Read file Error:", e)
+        sys.exit()
+
+def diff_file(filename1,filename2):
+    text1_lines = readfile(filename1)
+    text2_lines = readfile(filename2)
+    d = difflib.HtmlDiff()
+    # context=True时只显示差异的上下文，默认显示5行，由numlines参数控制，context=False显示全文，差异部分颜色高亮，默认为显示全文
+    result = d.make_file(text1_lines, text2_lines, filename1, filename2, context=True)
+    with open('result.html', 'w') as resultfile:
+        resultfile.write(result)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="传入两个文件参数")
+    parser.add_argument('-f1', action='store', dest='filename1', required=True)
+    parser.add_argument('-f2', action='store', dest='filename2', required=True)
+    given_args = parser.parse_args()
+    filename1 = given_args.filename1
+    filename2 = given_args.filename2
+    diff_file(filename1, filename2)
+
