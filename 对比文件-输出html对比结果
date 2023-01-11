@@ -4,7 +4,8 @@
 # File      Name:对比文件.py
 # Author:   XXXXXXX
 # Date:     2023/1/11 16:04
-# reference：https://blog.51cto.com/hnr520/1880736
+# reference:https://blog.51cto.com/hnr520/1880736
+# useage:   python 对比文件.py -f1 filename1.txt -f2 filename2.txt
 '''
 import difflib
 import argparse
