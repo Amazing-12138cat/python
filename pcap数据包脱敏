@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+from scapy.all import *
+
+# 读取pcap文件
+pkts = rdpcap('1.pcap')   
+
+# 定义要替换的IP地址和域名
+old_ip = '192.168.1.1'
+new_ip = '1.1.1.1'
+old_host = 'www.google.com'
+new_host = 'www.baidu.com'
+
+# 遍历每个数据包
+for pkt in pkts:
+    # 如果是IP数据包
+    if IP in pkt:
+        # 如果源IP地址是要替换的IP地址
+        if pkt[IP].src == old_ip:
+            # 替换源IP地址
+            pkt[IP].src = new_ip
+        # 如果目的IP地址是要替换的IP地址
+        if pkt[IP].dst == old_ip:
+            # 替换目的IP地址
+            pkt[IP].dst = new_ip
+    try:##不确定会不会报错，写个了tryexcept
+        if TCP in pkt:
+            http_data = str(pkt[TCP].load, 'utf-8')
+            if old_host in http_data:
+                http_data = http_data.replace(old_host, new_host)
+                pkt[TCP].load = http_data.encode('utf-8')
+                del pkt[TCP].len
+                del pkt[TCP].chksum
+    except:
+        pass
+# 保存修改后的pcap文件
+wrpcap('output.pcap', pkts)
